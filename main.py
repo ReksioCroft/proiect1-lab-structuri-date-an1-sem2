@@ -229,6 +229,7 @@ def heapsort( v ):
 
 fin = open( "date.in" )
 co = 0
+co1 = co2 = 0
 
 for i in fin:
     co += 1
@@ -238,6 +239,7 @@ for i in fin:
     start = time.time()
     l1.sort()
     stop = time.time()
+    t1 = stop - start
     print( "Am sortat folosind functia de biblioteca " + str( len(l1) ) + " numere <= " + str( l1[-1] ) + " in " + str( stop - start ) + " secunde " )
 
     if len(l) < 100000:
@@ -245,8 +247,10 @@ for i in fin:
         start = time.time()
         l2 = bubblesort( l2 )
         stop = time.time()
+        t2 = stop-start
         if l2 != l1:
             print( "eroare bubblesort" )
+            print(l2)
         else:
             print("Am sortat folosind bubblesort " + str( len(l2) ) + " numere <= " + str( l2[-1] ) + " in " + str( stop - start ) + " secunde ")
     else:
@@ -257,8 +261,10 @@ for i in fin:
         start = time.time()
         l2 = countsort(l2)
         stop = time.time()
+        t2 = min( t2, stop-start )
         if l2 != l1:
             print("eroare countsort")
+            print(l2)
         else:
             print("Am sortat folosind countsort " + str(len(l2)) + " numere <= " + str(l2[-1]) + " in " + str( stop - start ) + " secunde ")
     else:
@@ -268,8 +274,10 @@ for i in fin:
     start = time.time()
     l2 = quicksort(l2)
     stop = time.time()
+    t2 = min( t2, stop - start )
     if l2 != l1:
         print("eroare quicksort")
+        print(l2)
     else:
         print("Am sortat folosind quicksort " + str(len(l2)) + " numere <= " + str(l2[-1]) + " in " + str( stop - start ) + " secunde ")
 
@@ -277,8 +285,10 @@ for i in fin:
     start = time.time()
     l2 = mergesort(l2)
     stop = time.time()
+    t2 = min( t2, stop - start )
     if l2 != l1:
         print("eroare mergesort")
+        print(l2)
     else:
         print("Am sortat folosind mergesort " + str(len(l2)) + " numere <= " + str(l2[-1]) + " in " + str( stop - start ) + " secunde ")
 
@@ -286,8 +296,10 @@ for i in fin:
     start = time.time()
     l2 = heapsort(l2)
     stop = time.time()
+    t2 = min( t2, stop - start )
     if l2 != l1:
         print("eroare heapsort")
+        print(l2)
     else:
         print("Am sortat folosind heapsort " + str(len(l2)) + " numere <= " + str(l2[-1]) + " in " + str(stop - start) + " secunde ")
 
@@ -295,6 +307,7 @@ for i in fin:
     start = time.time()
     l2 = radixsort1_rec(l2, 32-8 )
     stop = time.time()
+    t2 = min( t2, stop - start )
     if l2 != l1:
         print("eroare radixsort1_rec", end=" ")
         print(l2)
@@ -305,6 +318,7 @@ for i in fin:
     start = time.time()
     l2 = radixsort1_itr(l2)
     stop = time.time()
+    t2 = min( t2, stop - start )
     if l2 != l1:
         print("eroare radixsort1_itr", end=" ")
         print(l2)
@@ -315,10 +329,25 @@ for i in fin:
     start = time.time()
     l2 = radixsort2(l2, 32 - 8, 0, len(l2))
     stop = time.time()
+    t2 = min( t2, stop - start )
     if l2 != l1:
         print("eroare radixsort2", end=" ")
         print(l2)
     else:
         print("Am sortat folosind radixsort2 " + str(len(l2)) + " numere <= " + str(l2[-1]) + " in " + str( stop - start) + " secunde ")
 
+    if t1 < t2:
+        co1 += 1
+    else:
+        co2 += 1
     print()
+
+print( "Concluzia:")
+if co2 > co1:
+    print( "Programatorul merita un premiu!" )
+elif co2 == co1:
+    print( "Merita sa implementezi sortarea de mana ca sa te dai mare!" )
+else:
+    print( "In python, renunta la asemenea idei. Nu poti bate limbajul =))) !" )
+
+print( "That's all folks!" )
