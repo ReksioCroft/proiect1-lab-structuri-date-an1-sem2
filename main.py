@@ -175,6 +175,58 @@ def radixsort2( v, shift, pozstart, pozstop ):  #radix sort in baza 256, fara ve
     return v
 
 
+def heapsort( v ):
+    heap = [-1]
+
+    def inserare_heap( nr ):
+        heap.append( nr )
+        poz = len( heap ) - 1
+        while heap[poz] < heap[poz//2]:
+            aux = heap[poz]
+            heap[poz] = heap[poz//2]
+            heap[poz//2] = aux
+            poz //=2
+
+    def extragere_heap():
+        nr = heap[1]
+        ultim = heap.pop()
+        if len( heap ) > 1:
+            heap[1] = ultim
+            poztata = 1
+            ok = True
+            while ok:
+                if poztata * 2 > len(heap) - 1:
+                    ok = False
+                elif poztata * 2 == len(heap) - 1:
+                    if heap[poztata*2] < heap[poztata]:
+                        aux = heap[poztata*2]
+                        heap[poztata*2] = heap[poztata]
+                        heap[poztata] = aux
+                    ok = False
+                else:
+                    minifiu = ( 2 * poztata ) if heap[2 * poztata] < heap[2 * poztata + 1] else (2 * poztata + 1)
+                    if heap[minifiu] < heap[poztata]:
+                        aux = heap[poztata]
+                        heap[poztata] = heap[minifiu]
+                        heap[minifiu] = aux
+                        poztata = minifiu
+                    else:
+                        ok = False
+            return [nr]
+        elif len(heap) == 1:
+            return [nr]
+        else:
+            return []
+
+    for i in v:
+        inserare_heap( i )
+
+    v = []
+    while len( heap ) > 1:
+        v.extend( extragere_heap() )
+    return v
+
+
 fin = open( "date.in" )
 co = 0
 
@@ -232,6 +284,15 @@ for i in fin:
 
     l2 = l.copy()
     start = time.time()
+    l2 = heapsort(l2)
+    stop = time.time()
+    if l2 != l1:
+        print("eroare heapsort")
+    else:
+        print("Am sortat folosind heapsort " + str(len(l2)) + " numere <= " + str(l2[-1]) + " in " + str(stop - start) + " secunde ")
+
+    l2 = l.copy()
+    start = time.time()
     l2 = radixsort1_rec(l2, 32-8 )
     stop = time.time()
     if l2 != l1:
@@ -259,4 +320,5 @@ for i in fin:
         print(l2)
     else:
         print("Am sortat folosind radixsort2 " + str(len(l2)) + " numere <= " + str(l2[-1]) + " in " + str( stop - start) + " secunde ")
+
     print()
