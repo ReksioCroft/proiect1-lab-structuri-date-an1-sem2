@@ -97,7 +97,7 @@ def mergesort( v ):
     return interclasare( v1, v2 )
 
 
-def radixsort1( v, shift ):     # radixsort recursiv in baza 256
+def radixsort1_rec( v, shift ):     # radixsort recursiv in baza 256
     bucket = [ [] for i in range(256) ]
     mask = ( 1 << 8 ) - 1
     for i in v:
@@ -105,12 +105,37 @@ def radixsort1( v, shift ):     # radixsort recursiv in baza 256
     v = []
     for i in range(256):
         if shift > 0 and len( bucket[i] ) > 1:
-            bucket[i] = radixsort1( bucket[i], shift-8 )
+            bucket[i] = radixsort1_rec( bucket[i], shift-8 )
         v.extend( bucket[i] )
     return v
 
 
-def radixsort2( v, shift, pozstart, pozstop ):
+def radixsort1_itr( v ):    #radix sort iterativ in baza 256, incepand cu cifra nesemnificativa
+    base = 256
+    shift = 0
+    mask = ( 1 << 8 ) - 1
+
+    maxi = max(v)
+    co = 0
+    while maxi > 0:
+        maxi >>= 8
+        co += 1
+
+    for i in range( co ):
+        bucket = []
+        for j in range( base ):
+            bucket.append( [] )
+        for j in v:
+            nr = ( j >> shift ) & mask
+            bucket[nr].append(j)
+        v = []
+        for j in range(base):
+            v.extend( bucket[j] )
+        shift += 8
+    return v
+
+
+def radixsort2( v, shift, pozstart, pozstop ):  #radix sort in baza 256, fara vector suplimentar
     base = 1 << 8
     mask = (1 << 8) - 1
 
@@ -207,13 +232,23 @@ for i in fin:
 
     l2 = l.copy()
     start = time.time()
-    l2 = radixsort1(l2, 32-8 )
+    l2 = radixsort1_rec(l2, 32-8 )
     stop = time.time()
     if l2 != l1:
-        print("eroare radixsort1", end=" ")
+        print("eroare radixsort1_rec", end=" ")
         print(l2)
     else:
-        print("Am sortat folosind radixsort1 " + str(len(l2)) + " numere <= " + str(l2[-1]) + " in " + str( stop - start ) + " secunde ")
+        print("Am sortat folosind radixsort1_rec " + str(len(l2)) + " numere <= " + str(l2[-1]) + " in " + str( stop - start ) + " secunde ")
+
+    l2 = l.copy()
+    start = time.time()
+    l2 = radixsort1_itr(l2)
+    stop = time.time()
+    if l2 != l1:
+        print("eroare radixsort1_itr", end=" ")
+        print(l2)
+    else:
+        print("Am sortat folosind radixsort1_itr " + str(len(l2)) + " numere <= " + str(l2[-1]) + " in " + str(stop - start) + " secunde ")
 
     l2 = l.copy()
     start = time.time()
