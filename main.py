@@ -96,8 +96,8 @@ def mergesort( v ):
 
     return interclasare( v1, v2 )
 
-def Radixsort1_rec( v ):
-    def radixsort1_rec( v, shift ):     # radixsort recursiv in baza 256
+def radixsort1_rec( v ):
+    def Radixsort1_rec( v, shift ):     # radixsort recursiv in baza 256
         bucket = [ [] for i in range(256) ]
         mask = ( 1 << 8 ) - 1
         for i in v:
@@ -105,10 +105,10 @@ def Radixsort1_rec( v ):
         v = []
         for i in range(256):
             if shift > 0 and len( bucket[i] ) > 1:
-                bucket[i] = radixsort1_rec( bucket[i], shift-8 )
+                bucket[i] = Radixsort1_rec( bucket[i], shift-8 )
             v.extend( bucket[i] )
         return v
-    return radixsort1_rec( v, 32 - 8 )
+    return Radixsort1_rec( v, 32 - 8 )
 
 
 def radixsort1_itr( v ):    #radix sort iterativ in baza 256, incepand cu cifra nesemnificativa
@@ -136,8 +136,8 @@ def radixsort1_itr( v ):    #radix sort iterativ in baza 256, incepand cu cifra 
     return v
 
 
-def Radixsort2( v ):
-    def radixsort2( v, shift, pozstart, pozstop ):  #radix sort in baza 256, fara vector suplimentar
+def radixsort2( v ):
+    def Radixsort2( v, shift, pozstart, pozstop ):  #radix sort in baza 256, fara vector suplimentar
         base = 1 << 8
         mask = (1 << 8) - 1
 
@@ -172,10 +172,10 @@ def Radixsort2( v ):
             for i in range(base):
                 prev = stop[i-1] if i > 0 else pozstart
                 if stop[i] - prev > 1:
-                     v = radixsort2( v, shift - 8, prev, stop[i] )
+                     v = Radixsort2( v, shift - 8, prev, stop[i] )
 
         return v
-    return radixsort2(l2, 32 - 8, 0, len(l2))
+    return Radixsort2(l2, 32 - 8, 0, len(l2))
 
 
 def heapsort( v ):
@@ -230,14 +230,17 @@ def heapsort( v ):
     return v
 
 
-fin = open( "date.in" )
+teste = open( "teste.in" )
 co = 0
 co1 = co2 = 0
-sortari = [ bubblesort, countsort, quicksort, mergesort, heapsort, Radixsort1_rec, radixsort1_itr, Radixsort2 ]
-for i in fin:
+sortari = [ bubblesort, countsort, quicksort, mergesort, heapsort, radixsort1_rec, radixsort1_itr, radixsort2 ]
+
+for i in teste:
     co += 1
     print( "TESTUL NUMARUL " + str(co) )
     l = [int(x.strip(",")) for x in i.split() ]
+
+    # sortare de biblioteca, fata de care vom compara celelalte sortari pentru verificare corectitudinii
     l1 = l.copy()
     start = time.time()
     l1.sort()
@@ -245,7 +248,7 @@ for i in fin:
     t1 = stop - start
     print( "Am sortat folosind functia de biblioteca " + str( len(l1) ) + " numere <= " + str( l1[-1] ) + " in " + str( stop - start ) + " secunde " )
 
-    t2 = 1<<32
+    t2 = 1 << 32 # Infinit
     for sortare in sortari:
         if sortare == bubblesort and len(l) >= 100000:
             print("bubblesort skiped for " + str(len(l)) + " numbers")
