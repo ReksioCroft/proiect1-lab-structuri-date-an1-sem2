@@ -96,18 +96,19 @@ def mergesort( v ):
 
     return interclasare( v1, v2 )
 
-
-def radixsort1_rec( v, shift ):     # radixsort recursiv in baza 256
-    bucket = [ [] for i in range(256) ]
-    mask = ( 1 << 8 ) - 1
-    for i in v:
-        bucket[ ( i >> shift ) & mask ].append( i )
-    v = []
-    for i in range(256):
-        if shift > 0 and len( bucket[i] ) > 1:
-            bucket[i] = radixsort1_rec( bucket[i], shift-8 )
-        v.extend( bucket[i] )
-    return v
+def Radixsort1_rec( v ):
+    def radixsort1_rec( v, shift ):     # radixsort recursiv in baza 256
+        bucket = [ [] for i in range(256) ]
+        mask = ( 1 << 8 ) - 1
+        for i in v:
+            bucket[ ( i >> shift ) & mask ].append( i )
+        v = []
+        for i in range(256):
+            if shift > 0 and len( bucket[i] ) > 1:
+                bucket[i] = radixsort1_rec( bucket[i], shift-8 )
+            v.extend( bucket[i] )
+        return v
+    return radixsort1_rec( v, 32 - 8 )
 
 
 def radixsort1_itr( v ):    #radix sort iterativ in baza 256, incepand cu cifra nesemnificativa
@@ -135,44 +136,46 @@ def radixsort1_itr( v ):    #radix sort iterativ in baza 256, incepand cu cifra 
     return v
 
 
-def radixsort2( v, shift, pozstart, pozstop ):  #radix sort in baza 256, fara vector suplimentar
-    base = 1 << 8
-    mask = (1 << 8) - 1
+def Radixsort2( v ):
+    def radixsort2( v, shift, pozstart, pozstop ):  #radix sort in baza 256, fara vector suplimentar
+        base = 1 << 8
+        mask = (1 << 8) - 1
 
-    start = [ 0 for i in range(base) ]
-    stop = [ 0 for i in range(base) ]
+        start = [ 0 for i in range(base) ]
+        stop = [ 0 for i in range(base) ]
 
-    start[0] = stop[0] = pozstart
+        start[0] = stop[0] = pozstart
 
-    for i in range(pozstart,pozstop):
-        stop[(v[i] >> shift) & mask] += 1              # calculam cate numere sunt in bucket-ul i
+        for i in range(pozstart,pozstop):
+            stop[(v[i] >> shift) & mask] += 1              # calculam cate numere sunt in bucket-ul i
 
-    for i in range( 1, base ):                       # precalculam unde incepe si unde se termina fiecare bucket i: [ start[i], stop[i] )
-        start[i] = stop[i-1]
-        stop[i] += start[i]
+        for i in range( 1, base ):                       # precalculam unde incepe si unde se termina fiecare bucket i: [ start[i], stop[i] )
+            start[i] = stop[i-1]
+            stop[i] += start[i]
 
-    for i in range(base):
-        while start[i] < stop[i]:                     # cat timp numerele din bucket-ul i se afla in alta parte
-            nr = v[ start[i] ]
-            nr_bucket = ( nr >> shift ) & mask
-            while nr_bucket != i:                     # cat timp nu am gasit un nr care intra in bucket-ul i
-                aux = v[ start[nr_bucket] ]
-
-                v[ start[ nr_bucket] ] = nr
-                start[nr_bucket] += 1
-
-                nr = aux
-                nr_bucket = ( nr >> shift ) & mask
-            v[ start[i] ] = nr
-            start[i] += 1
-
-    if shift > 0:
         for i in range(base):
-            prev = stop[i-1] if i > 0 else pozstart
-            if stop[i] - prev > 1:
-                 v = radixsort2( v, shift - 8, prev, stop[i] )
+            while start[i] < stop[i]:                     # cat timp numerele din bucket-ul i se afla in alta parte
+                nr = v[ start[i] ]
+                nr_bucket = ( nr >> shift ) & mask
+                while nr_bucket != i:                     # cat timp nu am gasit un nr care intra in bucket-ul i
+                    aux = v[ start[nr_bucket] ]
 
-    return v
+                    v[ start[ nr_bucket] ] = nr
+                    start[nr_bucket] += 1
+
+                    nr = aux
+                    nr_bucket = ( nr >> shift ) & mask
+                v[ start[i] ] = nr
+                start[i] += 1
+
+        if shift > 0:
+            for i in range(base):
+                prev = stop[i-1] if i > 0 else pozstart
+                if stop[i] - prev > 1:
+                     v = radixsort2( v, shift - 8, prev, stop[i] )
+
+        return v
+    return radixsort2(l2, 32 - 8, 0, len(l2))
 
 
 def heapsort( v ):
@@ -230,7 +233,7 @@ def heapsort( v ):
 fin = open( "date.in" )
 co = 0
 co1 = co2 = 0
-
+sortari = [ bubblesort, countsort, quicksort, mergesort, heapsort, Radixsort1_rec, radixsort1_itr, Radixsort2 ]
 for i in fin:
     co += 1
     print( "TESTUL NUMARUL " + str(co) )
@@ -242,100 +245,23 @@ for i in fin:
     t1 = stop - start
     print( "Am sortat folosind functia de biblioteca " + str( len(l1) ) + " numere <= " + str( l1[-1] ) + " in " + str( stop - start ) + " secunde " )
 
-    if len(l) < 100000:
-        l2 = l.copy()
-        start = time.time()
-        l2 = bubblesort( l2 )
-        stop = time.time()
-        t2 = stop-start
-        if l2 != l1:
-            print( "eroare bubblesort" )
-            print(l2)
+    t2 = 1<<32
+    for sortare in sortari:
+        if sortare == bubblesort and len(l) >= 100000:
+            print("bubblesort skiped for " + str(len(l)) + " numbers")
+        elif sortare == countsort and max(l) - min(l) >= 10000000:
+            print("countsort skipped for " + str(max(l) - min(l)) + " memory")
         else:
-            print("Am sortat folosind bubblesort " + str( len(l2) ) + " numere <= " + str( l2[-1] ) + " in " + str( stop - start ) + " secunde ")
-    else:
-        print( "bubblesort skiped for " + str( len(l) ) + " numbers" )
-
-    if max(l) - min(l) < 10000000:
-        l2 = l.copy()
-        start = time.time()
-        l2 = countsort(l2)
-        stop = time.time()
-        t2 = min( t2, stop-start )
-        if l2 != l1:
-            print("eroare countsort")
-            print(l2)
-        else:
-            print("Am sortat folosind countsort " + str(len(l2)) + " numere <= " + str(l2[-1]) + " in " + str( stop - start ) + " secunde ")
-    else:
-        print( "countsort skipped for " + str( max(l)-min(l) ) + " memory" )
-
-    l2 = l.copy()
-    start = time.time()
-    l2 = quicksort(l2)
-    stop = time.time()
-    t2 = min( t2, stop - start )
-    if l2 != l1:
-        print("eroare quicksort")
-        print(l2)
-    else:
-        print("Am sortat folosind quicksort " + str(len(l2)) + " numere <= " + str(l2[-1]) + " in " + str( stop - start ) + " secunde ")
-
-    l2 = l.copy()
-    start = time.time()
-    l2 = mergesort(l2)
-    stop = time.time()
-    t2 = min( t2, stop - start )
-    if l2 != l1:
-        print("eroare mergesort")
-        print(l2)
-    else:
-        print("Am sortat folosind mergesort " + str(len(l2)) + " numere <= " + str(l2[-1]) + " in " + str( stop - start ) + " secunde ")
-
-    l2 = l.copy()
-    start = time.time()
-    l2 = heapsort(l2)
-    stop = time.time()
-    t2 = min( t2, stop - start )
-    if l2 != l1:
-        print("eroare heapsort")
-        print(l2)
-    else:
-        print("Am sortat folosind heapsort " + str(len(l2)) + " numere <= " + str(l2[-1]) + " in " + str(stop - start) + " secunde ")
-
-    l2 = l.copy()
-    start = time.time()
-    l2 = radixsort1_rec(l2, 32-8 )
-    stop = time.time()
-    t2 = min( t2, stop - start )
-    if l2 != l1:
-        print("eroare radixsort1_rec", end=" ")
-        print(l2)
-    else:
-        print("Am sortat folosind radixsort1_rec " + str(len(l2)) + " numere <= " + str(l2[-1]) + " in " + str( stop - start ) + " secunde ")
-
-    l2 = l.copy()
-    start = time.time()
-    l2 = radixsort1_itr(l2)
-    stop = time.time()
-    t2 = min( t2, stop - start )
-    if l2 != l1:
-        print("eroare radixsort1_itr", end=" ")
-        print(l2)
-    else:
-        print("Am sortat folosind radixsort1_itr " + str(len(l2)) + " numere <= " + str(l2[-1]) + " in " + str(stop - start) + " secunde ")
-
-    l2 = l.copy()
-    start = time.time()
-    l2 = radixsort2(l2, 32 - 8, 0, len(l2))
-    stop = time.time()
-    t2 = min( t2, stop - start )
-    if l2 != l1:
-        print("eroare radixsort2", end=" ")
-        print(l2)
-    else:
-        print("Am sortat folosind radixsort2 " + str(len(l2)) + " numere <= " + str(l2[-1]) + " in " + str( stop - start) + " secunde ")
-
+            l2 = l.copy()
+            start = time.time()
+            l2 = sortare(l2)
+            stop = time.time()
+            t2 = min( t2, stop - start )
+            if l2 != l1:
+                print("eroare " + str(sortare) )
+                print(l2)
+            else:
+                print("Am sortat folosind " + str(sortare) + " " + str(len(l2)) + " numere <= " + str(l2[-1]) + " in " + str( stop - start ) + " secunde ")
     if t1 < t2:
         co1 += 1
     else:
