@@ -1,13 +1,112 @@
 TESTUL NUMARUL 1
-Am sortat folosind functia de biblioteca 100 numere <= 992 in 1.430511474609375e-05 secunde
-Am sortat folosind <function bubblesort at 0x7facdf5c1040> 100 numere <= 992 in 0.005530357360839844 secunde
-Am sortat folosind <function countsort at 0x7facdf4a7790> 100 numere <= 992 in 0.0005195140838623047 secunde
-Am sortat folosind <function quicksort at 0x7facdf4a7820> 100 numere <= 992 in 0.0007236003875732422 secunde
-Am sortat folosind <function mergesort at 0x7facdf4a78b0> 100 numere <= 992 in 0.0007078647613525391 secunde
-Am sortat folosind <function heapsort at 0x7facdf4a7af0> 100 numere <= 992 in 0.0007567405700683594 secunde
-Am sortat folosind <function radixsort1_rec at 0x7facdf4a7940> 100 numere <= 992 in 0.0028040409088134766 secunde
-Am sortat folosind <function radixsort1_itr at 0x7facdf4a79d0> 100 numere <= 992 in 0.0002067089080810547 secunde
-Am sortat folosind <function radixsort2 at 0x7facdf4a7a60> 100 numere <= 992 in 0.0015194416046142578 secunde
+Am sortat folosind functia de biblioteca 100 numere <= 994 in 1.6927719116210938e-05 secunde
+Am sortat folosind <function bubblesort at 0x7f8b07471040> 100 numere <= 994 in 0.0042378902435302734 secunde
+Am sortat folosind <function countsort at 0x7f8b07355790> 100 numere <= 994 in 0.0005242824554443359 secunde
+Am sortat folosind <function quicksort at 0x7f8b07355820> 100 numere <= 994 in 0.000812530517578125 secunde
+Am sortat folosind <function mergesort at 0x7f8b073558b0> 100 numere <= 994 in 0.0008840560913085938 secunde
+Am sortat folosind <function heapsort at 0x7f8b07355af0> 100 numere <= 994 in 0.0010633468627929688 secunde
+Am sortat folosind <function radixsort1_rec at 0x7f8b07355940> 100 numere <= 994 in 0.0020933151245117188 secunde
+Am sortat folosind <function radixsort1_itr at 0x7f8b073559d0> 100 numere <= 994 in 0.00024628639221191406 secunde
+Am sortat folosind <function radixsort2 at 0x7f8b07355a60> 100 numere <= 994 in 0.0011172294616699219 secunde
+
+TESTUL NUMARUL 2
+Am sortat folosind functia de biblioteca 1 numere <= 2 in 1.430511474609375e-06 secunde
+Am sortat folosind <function bubblesort at 0x7f8b07471040> 1 numere <= 2 in 3.0994415283203125e-06 secunde
+Am sortat folosind <function countsort at 0x7f8b07355790> 1 numere <= 2 in 8.58306884765625e-06 secunde
+Am sortat folosind <function quicksort at 0x7f8b07355820> 1 numere <= 2 in 1.9550323486328125e-05 secunde
+Am sortat folosind <function mergesort at 0x7f8b073558b0> 1 numere <= 2 in 3.0994415283203125e-06 secunde
+Am sortat folosind <function heapsort at 0x7f8b07355af0> 1 numere <= 2 in 1.0013580322265625e-05 secunde
+Am sortat folosind <function radixsort1_rec at 0x7f8b07355940> 1 numere <= 2 in 9.846687316894531e-05 secunde
+Am sortat folosind <function radixsort1_itr at 0x7f8b073559d0> 1 numere <= 2 in 6.794929504394531e-05 secunde
+Am sortat folosind <function radixsort2 at 0x7f8b07355a60> 1 numere <= 2 in 0.00013375282287597656 secunde
+
+TESTUL NUMARUL 3
+Am sortat folosind functia de biblioteca 100 numere <= 1 in 8.58306884765625e-06 secunde
+Am sortat folosind <function bubblesort at 0x7f8b07471040> 100 numere <= 1 in 0.0016922950744628906 secunde
+Am sortat folosind <function countsort at 0x7f8b07355790> 100 numere <= 1 in 3.337860107421875e-05 secunde
+Am sortat folosind <function quicksort at 0x7f8b07355820> 100 numere <= 1 in 0.000579833984375 secunde
+Am sortat folosind <function mergesort at 0x7f8b073558b0> 100 numere <= 1 in 0.0006632804870605469 secunde
+Am sortat folosind <function heapsort at 0x7f8b07355af0> 100 numere <= 1 in 0.0005624294281005859 secunde
+Am sortat folosind <function radixsort1_rec at 0x7f8b07355940> 100 numere <= 1 in 0.0008206367492675781 secunde
+Am sortat folosind <function radixsort1_itr at 0x7f8b073559d0> 100 numere <= 1 in 0.000141143798828125 secunde
+Am sortat folosind <function radixsort2 at 0x7f8b07355a60> 100 numere <= 1 in 0.001226663589477539 secunde
+
+TESTUL NUMARUL 4
+Am sortat folosind functia de biblioteca 1000 numere <= 99994 in 0.00016307830810546875 secunde
+Am sortat folosind <function bubblesort at 0x7f8b07471040> 1000 numere <= 99994 in 0.37694764137268066 secunde
+Am sortat folosind <function countsort at 0x7f8b07355790> 1000 numere <= 99994 in 0.03796243667602539 secunde
+Am sortat folosind <function quicksort at 0x7f8b07355820> 1000 numere <= 99994 in 0.010501384735107422 secunde
+Am sortat folosind <function mergesort at 0x7f8b073558b0> 1000 numere <= 99994 in 0.010979175567626953 secunde
+Am sortat folosind <function heapsort at 0x7f8b07355af0> 1000 numere <= 99994 in 0.015999794006347656 secunde
+Am sortat folosind <function radixsort1_rec at 0x7f8b07355940> 1000 numere <= 99994 in 0.03361344337463379 secunde
+Am sortat folosind <function radixsort1_itr at 0x7f8b073559d0> 1000 numere <= 99994 in 0.001253366470336914 secunde
+Am sortat folosind <function radixsort2 at 0x7f8b07355a60> 1000 numere <= 99994 in 0.05704355239868164 secunde
+
+TESTUL NUMARUL 5
+Am sortat folosind functia de biblioteca 100000 numere <= 1999989822 in 0.06985616683959961 secunde
+TLE SKIPPED FOR <function bubblesort at 0x7f8b07471040>
+countsort skipped for 1999979283 memory
+Am sortat folosind <function quicksort at 0x7f8b07355820> 100000 numere <= 1999989822 in 0.7850890159606934 secunde
+Am sortat folosind <function mergesort at 0x7f8b073558b0> 100000 numere <= 1999989822 in 0.971106767654419 secunde
+Am sortat folosind <function heapsort at 0x7f8b07355af0> 100000 numere <= 1999989822 in 1.8153305053710938 secunde
+Am sortat folosind <function radixsort1_rec at 0x7f8b07355940> 100000 numere <= 1999989822 in 2.357274293899536 secunde
+Am sortat folosind <function radixsort1_itr at 0x7f8b073559d0> 100000 numere <= 1999989822 in 0.1412363052368164 secunde
+Am sortat folosind <function radixsort2 at 0x7f8b07355a60> 100000 numere <= 1999989822 in 4.731633901596069 secunde
+
+TESTUL NUMARUL 6
+Am sortat folosind functia de biblioteca 1000000 numere <= 10 in 0.11721158027648926 secunde
+TLE SKIPPED FOR <function bubblesort at 0x7f8b07471040>
+Am sortat folosind <function countsort at 0x7f8b07355790> 1000000 numere <= 10 in 0.328571081161499 secunde
+Am sortat folosind <function quicksort at 0x7f8b07355820> 1000000 numere <= 10 in 9.639416933059692 secunde
+TLE SKIPPED FOR <function mergesort at 0x7f8b073558b0>
+TLE SKIPPED FOR <function heapsort at 0x7f8b07355af0>
+Am sortat folosind <function radixsort1_rec at 0x7f8b07355940> 1000000 numere <= 10 in 1.018033742904663 secunde
+Am sortat folosind <function radixsort1_itr at 0x7f8b073559d0> 1000000 numere <= 10 in 0.2742729187011719 secunde
+Am sortat folosind <function radixsort2 at 0x7f8b07355a60> 1000000 numere <= 10 in 3.326781749725342 secunde
+
+TESTUL NUMARUL 7
+Am sortat folosind functia de biblioteca 1000000 numere <= 100000 in 0.5110373497009277 secunde
+TLE SKIPPED FOR <function bubblesort at 0x7f8b07471040>
+Am sortat folosind <function countsort at 0x7f8b07355790> 1000000 numere <= 100000 in 0.4951436519622803 secunde
+Am sortat folosind <function quicksort at 0x7f8b07355820> 1000000 numere <= 100000 in 9.578960180282593 secunde
+TLE SKIPPED FOR <function mergesort at 0x7f8b073558b0>
+TLE SKIPPED FOR <function heapsort at 0x7f8b07355af0>
+Am sortat folosind <function radixsort1_rec at 0x7f8b07355940> 1000000 numere <= 100000 in 1.310621738433838 secunde
+Am sortat folosind <function radixsort1_itr at 0x7f8b073559d0> 1000000 numere <= 100000 in 1.114518404006958 secunde
+Am sortat folosind <function radixsort2 at 0x7f8b07355a60> 1000000 numere <= 100000 in 3.2934420108795166 secunde
+
+TESTUL NUMARUL 8
+Am sortat folosind functia de biblioteca 10000000 numere <= 1999999492 in 11.599201440811157 secunde
+TLE SKIPPED FOR <function bubblesort at 0x7f8b07471040>
+countsort skipped for 1999999333 memory
+TLE SKIPPED FOR <function quicksort at 0x7f8b07355820>
+TLE SKIPPED FOR <function mergesort at 0x7f8b073558b0>
+TLE SKIPPED FOR <function heapsort at 0x7f8b07355af0>
+TLE SKIPPED FOR <function radixsort1_rec at 0x7f8b07355940>
+Am sortat folosind <function radixsort1_itr at 0x7f8b073559d0> 10000000 numere <= 1999999492 in 18.60602331161499 secunde
+TLE SKIPPED FOR <function radixsort2 at 0x7f8b07355a60>
+
+TESTUL NUMARUL 9
+Am sortat folosind functia de biblioteca 10000000 numere <= 100 in 1.4895412921905518 secunde
+TLE SKIPPED FOR <function bubblesort at 0x7f8b07471040>
+Am sortat folosind <function countsort at 0x7f8b07355790> 10000000 numere <= 100 in 3.0776355266571045 secunde
+TLE SKIPPED FOR <function quicksort at 0x7f8b07355820>
+TLE SKIPPED FOR <function mergesort at 0x7f8b073558b0>
+TLE SKIPPED FOR <function heapsort at 0x7f8b07355af0>
+TLE SKIPPED FOR <function radixsort1_rec at 0x7f8b07355940>
+Am sortat folosind <function radixsort1_itr at 0x7f8b073559d0> 10000000 numere <= 100 in 2.514962911605835 secunde
+TLE SKIPPED FOR <function radixsort2 at 0x7f8b07355a60>
+
+TESTUL NUMARUL 10
+Am sortat folosind functia de biblioteca 100000 numere <= 1 in 0.006982088088989258 secunde
+TLE SKIPPED FOR <function bubblesort at 0x7f8b07471040>
+Am sortat folosind <function countsort at 0x7f8b07355790> 100000 numere <= 1 in 0.041110992431640625 secunde
+Am sortat folosind <function quicksort at 0x7f8b07355820> 100000 numere <= 1 in 0.7590062618255615 secunde
+Am sortat folosind <function mergesort at 0x7f8b073558b0> 100000 numere <= 1 in 0.9047811031341553 secunde
+Am sortat folosind <function heapsort at 0x7f8b07355af0> 100000 numere <= 1 in 1.0102441310882568 secunde
+Am sortat folosind <function radixsort1_rec at 0x7f8b07355940> 100000 numere <= 1 in 0.17945289611816406 secunde
+Am sortat folosind <function radixsort1_itr at 0x7f8b073559d0> 100000 numere <= 1 in 0.025187015533447266 secunde
+Am sortat folosind <function radixsort2 at 0x7f8b07355a60> 100000 numere <= 1 in 0.2966301441192627 secunde
 
 Concluzia:
 In python, renunta la asemenea idei. Nu poti bate limbajul =))) !
