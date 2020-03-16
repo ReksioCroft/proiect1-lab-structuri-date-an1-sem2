@@ -1,0 +1,14 @@
+TESTUL NUMARUL 1
+Am sortat folosind functia de biblioteca 100 numere <= 992 in 1.430511474609375e-05 secunde
+Am sortat folosind <function bubblesort at 0x7facdf5c1040> 100 numere <= 992 in 0.005530357360839844 secunde
+Am sortat folosind <function countsort at 0x7facdf4a7790> 100 numere <= 992 in 0.0005195140838623047 secunde
+Am sortat folosind <function quicksort at 0x7facdf4a7820> 100 numere <= 992 in 0.0007236003875732422 secunde
+Am sortat folosind <function mergesort at 0x7facdf4a78b0> 100 numere <= 992 in 0.0007078647613525391 secunde
+Am sortat folosind <function heapsort at 0x7facdf4a7af0> 100 numere <= 992 in 0.0007567405700683594 secunde
+Am sortat folosind <function radixsort1_rec at 0x7facdf4a7940> 100 numere <= 992 in 0.0028040409088134766 secunde
+Am sortat folosind <function radixsort1_itr at 0x7facdf4a79d0> 100 numere <= 992 in 0.0002067089080810547 secunde
+Am sortat folosind <function radixsort2 at 0x7facdf4a7a60> 100 numere <= 992 in 0.0015194416046142578 secunde
+
+Concluzia:
+In python, renunta la asemenea idei. Nu poti bate limbajul =))) !
+That's all folks!

@@ -13,8 +13,10 @@ def bubblesort( v ):
                 v[i] = v[i-1]
                 v[i-1]=aux
                 ok = 0
+            if time.time() - tstart > TLE:
+                return [False]
         poz += 1
-    return  v
+    return v
 
 
 def countsort( v ):
@@ -34,6 +36,9 @@ def countsort( v ):
 
 def quicksort( v ):
     def quick( start, stop ):
+        global tstart
+        if time.time() - tstart > TLE:
+            return [False]
         i = start
         j = stop
         p1 = random.choice( v[start:stop+1] )
@@ -63,7 +68,10 @@ def quicksort( v ):
             quick( start, j )
 
     quick( 0, len(v) - 1 )
-    return v
+    if time.time() - tstart > TLE:
+        return [False]
+    else:
+        return v
 
 
 def mergesort( v ):
@@ -85,6 +93,8 @@ def mergesort( v ):
             j += 1
         return  l
 
+    if time.time() - tstart > TLE:
+        return [False]
     if len( v ) == 1:
         return v
 
@@ -94,10 +104,17 @@ def mergesort( v ):
     v1 = mergesort( v1 )
     v2 = mergesort( v2 )
 
-    return interclasare( v1, v2 )
+    l = interclasare( v1, v2 )
+    if time.time() - tstart > TLE:
+        return [False]
+    else:
+        return l
+
 
 def radixsort1_rec( v ):
     def Radixsort1_rec( v, shift ):     # radixsort recursiv in baza 256
+        if time.time() - tstart > TLE:
+            return [False]
         bucket = [ [] for i in range(256) ]
         mask = ( 1 << 8 ) - 1
         for i in v:
@@ -106,12 +123,18 @@ def radixsort1_rec( v ):
         for i in range(256):
             if shift > 0 and len( bucket[i] ) > 1:
                 bucket[i] = Radixsort1_rec( bucket[i], shift-8 )
+                if time.time() - tstart > TLE:
+                    return [False]
             v.extend( bucket[i] )
         return v
-    return Radixsort1_rec( v, 32 - 8 )
+    l = Radixsort1_rec( v, 32 - 8 )
+    if time.time() - tstart > TLE:
+        return [False]
+    else:
+        return l
 
 
-def radixsort1_itr( v ):    #radix sort iterativ in baza 256, incepand cu cifra nesemnificativa
+def radixsort1_itr( v ):    # Cea mai buna interpretare: radix sort iterativ in baza 256, incepand cu cifra nesemnificativa
     base = 256
     shift = 0
     mask = ( 1 << 8 ) - 1
@@ -137,7 +160,10 @@ def radixsort1_itr( v ):    #radix sort iterativ in baza 256, incepand cu cifra 
 
 
 def radixsort2( v ):
-    def Radixsort2( v, shift, pozstart, pozstop ):  #radix sort in baza 256, fara vector suplimentar
+    def Radixsort2( shift, pozstart, pozstop ):  #radix sort in baza 256, fara vector suplimentar
+        global tstart
+        if time.time() - tstart > TLE:
+            return [False]
         base = 1 << 8
         mask = (1 << 8) - 1
 
@@ -172,10 +198,13 @@ def radixsort2( v ):
             for i in range(base):
                 prev = stop[i-1] if i > 0 else pozstart
                 if stop[i] - prev > 1:
-                     v = Radixsort2( v, shift - 8, prev, stop[i] )
+                    Radixsort2( shift - 8, prev, stop[i] )
 
+    Radixsort2( 32 - 8, 0, len(l2))
+    if time.time() - tstart > TLE:
+        return [False]
+    else:
         return v
-    return Radixsort2(l2, 32 - 8, 0, len(l2))
 
 
 def heapsort( v ):
@@ -226,57 +255,83 @@ def heapsort( v ):
 
     v = []
     while len( heap ) > 1:
+        if time.time() - tstart > TLE:
+            return [False]
         v.extend( extragere_heap() )
     return v
 
 
-teste = open( "teste.in" )
+def generare( fout, n, maxi ):
+    for i in range( n ):
+        fout.write( str( random.choice( range( maxi + 1 ) ) ) + " " )
+    fout.write( '\n' )
+
+
+fin = input( "nume fisire ( \"teste.in\" pentru teste statice sau \"generare.in\" pentru teste random ): ")
+if fin == "generare.in":
+    fin = open( fin, "r" )
+    fout = open( "aux.bak", "w" )
+    for i in fin:
+        l = i.split()
+        n = int( l[0] )
+        maxi = int( l[1] )
+        generare( fout, n, maxi )
+    fin.close()
+    fout.close()
+    teste = open( "aux.bak", "r" )
+else:
+    teste = open( "teste.in", "r" )
+
 co = 0
 co1 = co2 = 0
 sortari = [ bubblesort, countsort, quicksort, mergesort, heapsort, radixsort1_rec, radixsort1_itr, radixsort2 ]
-
+fout = open( "sol.out", "w" )
+TLE = 10
 for i in teste:
     co += 1
+    fout.write( "TESTUL NUMARUL " + str(co) + '\n' )
     print( "TESTUL NUMARUL " + str(co) )
     l = [int(x.strip(",")) for x in i.split() ]
 
     # sortare de biblioteca, fata de care vom compara celelalte sortari pentru verificare corectitudinii
     l1 = l.copy()
-    start = time.time()
+    tstart = time.time()
     l1.sort()
-    stop = time.time()
-    t1 = stop - start
-    print( "Am sortat folosind functia de biblioteca " + str( len(l1) ) + " numere <= " + str( l1[-1] ) + " in " + str( stop - start ) + " secunde " )
+    tstop = time.time()
+    t1 = tstop - tstart
+    fout.write( "Am sortat folosind functia de biblioteca " + str( len(l1) ) + " numere <= " + str( l1[-1] ) + " in " + str( tstop - tstart ) + " secunde\n" )
 
     t2 = 1 << 32 # Infinit
     for sortare in sortari:
-        if sortare == bubblesort and len(l) >= 100000:
-            print("bubblesort skiped for " + str(len(l)) + " numbers")
-        elif sortare == countsort and max(l) - min(l) >= 10000000:
-            print("countsort skipped for " + str(max(l) - min(l)) + " memory")
+        if sortare == countsort and max(l) - min(l) >= 10000000:
+            fout.write("countsort skipped for " + str(max(l) - min(l)) + " memory\n")
         else:
             l2 = l.copy()
-            start = time.time()
+            tstart = time.time()
             l2 = sortare(l2)
-            stop = time.time()
-            t2 = min( t2, stop - start )
+            tstop = time.time()
+            t2 = min( t2, tstop - tstart )
             if l2 != l1:
-                print("eroare " + str(sortare) )
-                print(l2)
+                if l2 == [False]:
+                    fout.write( "TLE SKIPPED FOR " + str(sortare) + "\n" )
+                else:
+                    fout.write("eroare " + str(sortare) + ": ")
+                    fout.write(str(l2)+'\n')
             else:
-                print("Am sortat folosind " + str(sortare) + " " + str(len(l2)) + " numere <= " + str(l2[-1]) + " in " + str( stop - start ) + " secunde ")
+                fout.write("Am sortat folosind " + str(sortare) + " " + str(len(l2)) + " numere <= " + str(l2[-1]) + " in " + str( tstop - tstart ) + " secunde\n")
     if t1 < t2:
         co1 += 1
     else:
         co2 += 1
-    print()
+    fout.write( "\n")
 
-print( "Concluzia:")
+fout.write( "Concluzia:\n")
 if co2 > co1:
-    print( "Programatorul merita un premiu!" )
+    fout.write( "Programatorul merita un premiu!\n" )
 elif co2 == co1:
-    print( "Merita sa implementezi sortarea de mana ca sa te dai mare!" )
+    fout.write( "Merita sa implementezi sortarea de mana ca sa te dai mare!\n" )
 else:
-    print( "In python, renunta la asemenea idei. Nu poti bate limbajul =))) !" )
+    fout.write( "In python, renunta la asemenea idei. Nu poti bate limbajul =))) !\n" )
 
-print( "That's all folks!" )
+fout.write( "That's all folks!\n" )
+fout.close()
